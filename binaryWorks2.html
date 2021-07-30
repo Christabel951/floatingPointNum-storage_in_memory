@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>binaryinmemory</title>
+<link rel="stylesheet" href="binaryWorks1.css">
+  </head>
+  <body>
+    <div id="allin">
+    <h1>  IEEE 754-2008 Standard Double Precision (binary64) Format </h1>
+    <h2>Floating-point(Decimal fractional)Number Representation in Memory</h2>
+    <div class="userInput">
+         <form id="frm1" >
+          Please Enter Your  Floating Point Number
+          <br><br>
+          <input type="number" id="flot" placeholder="Enter Number" ><br><br>
+          <button id="bat" style="color:blue;"class="batan" tag="bi" > Convert
+          </button><br><br>Your floating point number =
+          <span id="displayNumber"></span>
+          </form>
+   </div>
+ </div>
+   <h3>The Conversion Procedure for The Double Precision Format Algorithm:</h3>
+   <div id="allin1">
+        <div id="1st">
+            <p><span class="allTitles">STEP1</span> </p>
+            <p id=>We seperate the fractional part and the integral part of the floating point number entered</p>
+            <form>
+                 <output id="myint" ><span class="step2">Integral Part Value(Decimal Notation) =</span><span id="myInteger1">Integral value</span></output><br><br>
+                 <output id="myflot"  value=""><span class="step2">Fractional Part Value(Decimal Notation) =</span><span id="myfloting1">Fractional value</span></output>
+           </form>
+       </div>
+
+       <div id="2nd"><br>
+      <span class="allTitles"> STEP2</span> <br><br> We convert each piece of step1 into a binary number<br><br>
+           <form>
+                <output id="myinta" ><span class="step2">Integral Part Value(Binary Notation) =</span><span id="myInteger2">Integral value</span></output>
+                <br><br>
+                <output id="myflota"  value=""><span class="step2">Fractional Part Value(Binary Notation) =</span><span id="myfloting2">Fractional value</span></output>
+           </form>
+       </div>
+       <div id="3rd"><br><span class="allTitles">STEP 3</span><br><br>  We concatenate the conversions in STEP2<br><br>
+            <form>
+                  <output id="myintb" ><span class="step2">Binary Fractional Number</span><p id="myInteger3">Concatenation Result</p></output>
+            </form>
+       </div>
+       <div id="4th"><span class="allTitles"="">STEP 4</span> <br><br>We Normalize the Fractional Number of STEP3 by shifting the binary point until 1 is
+        the only digit to the left of this radix point <br><br>
+         <form>
+              <output id="myfraction" ><span class="step2">The Normalized Binary Fraction Value =</span><span id="myfloting3">Normal Value</span></output><br><br>
+              <output id="mydirection"  value=""><span class="step2">The Direction of  Binary point shift(s) =</span><span id="mycompass">Left/Right</span></output>
+              <br><br>
+              <output id="shifts"  value=""><span class="step2">Exponent Value(The Number of Shifts) =</span><span id="myshifts">Exponent</span></output>
+        </form>
+      </div>
+      <div id="5th"><br><span class="allTitles">STEP 5</span> <br><br>We Generate the followong fields that makes the final representation of the floating point number in Memory
+      <br>
+<span class="fieldZ">
+      Sign Bit,
+    Biased Exponent and the
+Significand Representation
+</span><br><br>
+          <form>
+                <output id="signbit1" ><span class="step2">The Sign Bit Field =</span><span id="thisSign">Sign bit value</span><br><br>
+                 <span class="step2">Sign bit field size=</span>
+                 <span id="thisSignstore">Storage size</span>
+                 <p>(Negative floating point Number = 1; Positive floating point number =0) </p></output><br><br>
+
+                 <output id="exponential" value=""><span class="step2">The Biased Exponent Value=</span><span id="myExpo">Exponent Value(Bits)</span></output>
+                 <br><br>The Exponent field size=
+                 <span id="thisexpostore">Storage size</span>
+                 <p>The bias 1023 is added to the Exponent Value and converted to binary</p><br>
+
+                 <output id="significand "  value=""><span class="step2">The Significand =</span><span id="mySig">Significand Representation</span><br>
+                 <br>Significand field size = <span id="mySigsize">Storage size</span> </output>
+                <p>Remove the leading 1 and binary point of the Normalized Binary Fraction in STEP 4 and append zeros to the remaining significant digits if
+                need be  untill the total number of bits are 52</p>
+        </form>
+    </div>
+    <div id="6th"><br><span class="allTitles">STEP 6</span><br><br>  We concatenate the Signbit,The Biased Exponent and Siggnificand fields . <br><br>
+        <form>
+               <output id="myintd" ><span class="step2">Floating Point Number Representation in Memory</span><p id="myFinvalue">Concatenation Result</p></output>
+       </form>
+     </div>
+</div>
+<div id="idr"> <p id="demo"> </p>
+    <script>
+let placa=document.getElementById("flot");//input value node
+let resulbase=document.getElementById("demo");//display at last p node
+let clickevent=document.getElementById("bat");//Convert Button
+placa.placeholder="Float number";
+let firstResult=document.getElementById("displayNumber");//display original fraction
+let integralPartdisplay=document.getElementById("myInteger1");//integral part display decimal
+let fractionalPartdisplay=document.getElementById("myfloting1");//fractional part display decimal
+let integralBinarydisplay=document.getElementById("myInteger2");//integral part display binary
+let fractionalBinarydisplay=document.getElementById("myfloting2");//fractional part display binary
+let binaryFractiondisplay=document.getElementById("myInteger3");//binary fraction display
+let normalizedFractiondisply=document.getElementById("myfloting3");
+let directionDisplay=document.getElementById("mycompass");
+let shiftsDisplay=document.getElementById("myshifts");
+let signBitdisplay=document.getElementById("thisSign");
+let signStoragedisplay=document.getElementById("thisSignstore");
+let exponentDisplay=document.getElementById("myExpo");
+let exponentStoreDisplay=document.getElementById("thisexpostore");
+let significandDisplay=document.getElementById("mySig");
+let significandStore=document.getElementById("mySigsize");
+let finalBitdisplay=document.getElementById("myFinvalue");
+clickevent.addEventListener("mousedown",function (){
+
+let myfloatNumber=placa.value;//user input value
+//let checkIffloat=isDecimal(myfloatNumber);
+//firstResult.innerHTML=checkIffloat;
+firstResult.innerHTML=myfloatNumber;
+let radixPoint=".";
+//***Seperate the integral part from the fractional part of the floatpointvalue*****
+let firstDigit=getIntegralValue(myfloatNumber,radixPoint);
+integralPartdisplay.innerHTML=firstDigit;//(final integral value in string)
+
+let trueFloat=getFractionalValue(myfloatNumber,firstDigit);
+fractionalPartdisplay.innerHTML=trueFloat;//(fractional value of floatpointvalue in number)
+
+let numberint1 =Number(firstDigit);//integral value in number
+let finalBinary=integertoBinaryConversion(numberint1,firstDigit);
+integralBinarydisplay.innerHTML=finalBinary;//(recorded remaiders)
+
+let firstfpintclean=fractiontoBinaryConversion(trueFloat,radixPoint);
+fractionalBinarydisplay.innerHTML=firstfpintclean;//the fractional part binary equivalent
+
+//***Concatenate the  remaiders with the products integral part values to form the Binary of Floats*****
+let trueBinaryvalue=getOriginalFractionBinary(finalBinary,firstfpintclean,myfloatNumber);
+binaryFractiondisplay.innerHTML=trueBinaryvalue;
+//document.write(trueBinaryvalue.length);
+//*********************************************
+
+//***Normalization of binary float*****
+let trueSignificand=getBinaryExponent(trueBinaryvalue);
+//document.write(trueSignificand);
+normalizedFractiondisply.innerHTML=trueSignificand;
+
+//***Get the Binary Representation Pattern Elements *****
+let scientificNotation=trueSignificand;
+//resulbase.innerHTML=scientificNotation;
+let first=scientificNotation[0];
+let start=scientificNotation[3];
+let second=scientificNotation[2];
+   //1.**Get sign bit****
+let signBit=getSignBit(first) ;
+let signStorage=1;
+signBitdisplay.innerHTML=signBit;
+signStoragedisplay.innerHTML=signStorage;
+  //2. **Get the Exponent representation*****
+  //** Find the exponent value in number***
+let exponentValu=scientificNotation[scientificNotation.length-1];
+let operations=scientificNotation[scientificNotation.length-2];
+let exponentExtract=operations+exponentValu;
+exponentExtract=Number(exponentExtract);
+let directionshift="0";
+if(exponentExtract=="-"){
+  directionshift="To the right";
+}
+else{
+  directionshift="To the left";
+}
+directionDisplay.innerHTML=directionshift;//The shift directionshift
+shiftsDisplay.innerHTML=exponentValu;
+
+  //**Add the Exponent value to the bias 64-bitPattern and Convert to Binary(as Unsigned integer) *****
+const biasedExponent=1023;
+let trueExponent=biasedExponent+exponentExtract;// bias in number value
+let firstDigitstring1=trueExponent.toString();//bias in string
+let secondBinaryConversion=integertoBinaryConversion(trueExponent,firstDigitstring1);
+let exponentSize=11;
+exponentDisplay.innerHTML=secondBinaryConversion;
+exponentStoreDisplay.innerHTML=exponentSize;
+//3. ** Get the significand representation****
+  //**Extract significand from scientific Notation string leaving out the implicit 1***
+let significand=getSignificandRepresentation(first,second,start,scientificNotation);
+let significandSize=52;
+significandDisplay.innerHTML=significand;
+significandStore.innerHTML=significandSize;
+
+//***Concatenate all three number components*****
+let binaryinMemory=signBit+secondBinaryConversion+significand;
+finalBitdisplay.innerHTML=binaryinMemory;
+//document.write(binaryinMemory);
+//**********************************************
+ },false);
+ //*****Extract integral part of fraction value*********
+ function isDecimal(originalFraction){
+   //var str = "1.5";
+       let re = /^[-+]?[0-9]+\.[0-9]+$/;
+       let found = originalFraction.match( re );
+       if(found!==null){
+         return  found;
+       }
+       else{
+       return 0;
+      }
+ }
+
+ function getSignBit(firstIndex){
+   let signBit=null;
+       if (firstIndex=="-") {
+       signBit=1;
+       }
+       else{
+       signBit=0;
+       }
+       return signBit;
+ }
+function getSignificandRepresentation(firstIndex,thirdIndex,fourthIndex,scientificNotation){
+  let significand=fourthIndex;
+  let z=(scientificNotation.length-4);
+      if (firstIndex=="-"){
+         for(let i=4;i<=z;i++){
+         significand+=scientificNotation[i];
+         }
+      }
+      else{
+      significand=thirdIndex;
+          for(let i=3;i<=z;i++){
+          significand+=scientificNotation[i];
+          }
+      }
+     //**Append the rest of the significand with zero if its length<52***
+  let significandLimit=significand.length;
+      if(significandLimit<52){
+      let max4=52-significandLimit;
+          for(let j=1;j<=max4;j++){
+          significand+="0";
+          }
+      }
+      else{
+      significand;
+      }
+  //  resulbase.innerHTML=significand.length;
+return significand;
+
+}
+ function getIntegralValue(userInputValue,radixPoint){
+   let max=(userInputValue.length-1);//index number of last char of floatpointvalue in string
+   let firstDigitfunc=userInputValue[0];//assignment of first number character of floatpointvalue string
+       for(let i=1;i<=max;i++) {
+       let integral=userInputValue[i];//local
+          if(integral==radixPoint){
+          break;
+          }
+          else{
+          firstDigitfunc+=integral;//integral value in string assigned to global
+          }
+      }
+      return firstDigitfunc;
+ }
+ function getFractionalValue(originalFraction,integerValue){
+  let numfloatNum=Number(originalFraction);
+  let numIntegerNum=Number(integerValue);
+  return numfloatNum-numIntegerNum;
+ }
+ function integertoBinaryConversion(integerNum,integerPolarity){
+ let firstMod=integerNum%2;//first remainder in number value
+ let binStoragefunc=firstMod.toString();//first remainder in string value
+ //resulbase.innerHTML=binStoragefunc;
+     //**check negative numbers for safe concatenation @ division***
+ let binStorageunshift=binStoragefunc[0];
+       if(binStorageunshift=="-"){
+       binStoragefunc=binStoragefunc[1];
+       }
+       else {
+       binStoragefunc;
+       }
+   integerNum/=2;//first quotient in number value
+     //**Check for negative numbers to allow iteration @ loop ****
+let numberStatus=integerPolarity[0];
+       if(numberStatus=="-"){
+       integerNum*=-1;
+       }
+       else {
+       integerNum;
+       }
+       //**The iterative division****
+let i=integerNum;//quotient assigned loop variable
+         while(i>=1){
+         let modRem=i%2;//subsequent remaider based on condition at while.
+         let remString=modRem.toString();//remaider in string
+         let remString1= remString[0];
+         binStoragefunc+=remString1;//concatenation and storage of subsequent remainders with first remaider string value
+         i/=2;//storage of subsequent quotient number value
+         }
+  //return binStoragefunc;
+  //***Reverse the Sequential order of recorded remainders*****
+  let finalBinaryfunc=binStoragefunc[binStoragefunc.length-1];//last character value of the integral binary value
+      for(let j=binStoragefunc.length-2;j>=0;j--){
+      finalBinaryfunc+=binStoragefunc[j];//concatenation and storage of last integral char with the reverse
+                                // order of the integral binary value
+      }
+      return finalBinaryfunc;
+ }
+ function fractiontoBinaryConversion(fractinalValue,radixPoint){
+   let firstProduct=fractinalValue*2;//first product value in number
+     //**Get integral part of first product in string****
+   let binaryStoragefpv=firstProduct.toString();//firstproduct value in string
+  //resulbase.innerHTML=binaryStoragefpv;
+   let max1=(binaryStoragefpv.length-1);//index number of the last product string value
+   let firstfpint=binaryStoragefpv[0];//assign our finalbinary storage value for ints
+      //**Check for negative for exact record of a number****
+       if(firstfpint=="-"){
+       firstfpint=binaryStoragefpv[1];
+       }
+       else {
+       firstfpint;
+       }
+  //resulbase.innerHTML=firstfpint;
+//resulbase.innerHTML=radixPoint;
+       //** Integral number extraction****
+       for(let k=1;k<=max1;k++) {//ectraction of the productstring integral part
+       let integral1=binaryStoragefpv[k];
+          if(integral1==radixPoint){
+          break;
+          }
+          else{
+          firstfpint+=integral1;//integral value in string assigned
+          //resulbase.innerHTML=firstfpint;
+          }
+
+       }
+   let firstfpintcleanfunc=firstfpint[0];
+//resulbase.innerHTML=firstfpintcleanfunc;//( product integral part value in string)
+   //**Get the fractional part of first productstring
+let firstfpintNumber=Number(firstfpintcleanfunc);// product integral part value in number
+let firstProductchar=binaryStoragefpv[0]
+    if(firstProductchar=="-"){
+    firstProduct*=-1;
+    }
+    else {
+    firstProduct;
+    }
+let trueFloat2=firstProduct-firstfpintNumber;//product fractional part value in number
+//resulbase.innerHTML=trueFloat2;
+
+//***Multiply and Record the integral part and fractional part till fractionalpart value is zero
+let z=trueFloat2;
+while(z>0){
+  let secondProduct=z*2;//secondproduct value in number
+  //**Get the integral part of secondproduct****
+  let binaryStoragefpv1=secondProduct.toString();
+  let max2=binaryStoragefpv1.length-1;
+  let secondfpint=binaryStoragefpv1[0];
+  for(let k=1;k<=max2;k++) {//ectraction of the productstring integral part
+  let integral2=binaryStoragefpv1[k];
+     if(integral2==radixPoint){
+     break;
+     }
+     else{
+     secondfpint+=integral2;//integral value in string assigned
+     }
+  }
+let secondfpintclean=secondfpint[0];  //product2 integral part value in string
+firstfpintcleanfunc+=secondfpintclean;//concatenate firstproduct integralpart value with the rest of the second
+                                  //product integral part value in string
+                                  //binary equivalent of the fractional part of the floatingpointvalue
+  //**Get the fractionalpart of secondproduct
+let secondfpintNumber=Number(secondfpintclean);
+z=secondProduct-secondfpintNumber;
+ }
+ if(firstfpintcleanfunc.length>53){
+   firstfpintcleanfunc=firstfpintcleanfunc.slice(0,52);
+ }
+ return firstfpintcleanfunc;
+ }
+ function getOriginalFractionBinary(integerBinary,floatBinary,originalFraction){
+   let trueBinaryvalue=integerBinary+"."+floatBinary;
+   let finalAppendage=originalFraction[0];
+      if (finalAppendage=="-") {
+      trueBinaryvalue="-"+trueBinaryvalue;
+      }
+      else {
+      trueBinaryvalue;
+      }
+      return trueBinaryvalue;
+ }
+ function getBinaryExponent(trueBinaryvalue){
+   let max3=trueBinaryvalue.length-1;
+   let mantissaPoint="."
+   let firstbitCheck=trueBinaryvalue[0];
+   let leadingNonzero="1";
+   let exponentValue=0;
+   let count1=0;
+  // resulbase.innerHTML=trueBinaryvalue.length;
+     //**Conversion for negative numbers*****
+   if(firstbitCheck=="-"){
+   leadingNonzero="-1" ;
+   firstbitCheck=trueBinaryvalue[1];
+   //resulbase.innerHTML=firstbitCheck;
+       if(firstbitCheck=="1"){
+           for(let j=2;j<=max3;j++){
+           let checkRadix=trueBinaryvalue[j];
+           count1++;
+        //resulbase.innerHTML=count1;
+               if(checkRadix=="."){
+                  for(let k=j+1;k<=max3;k++){
+                  mantissaPoint+=trueBinaryvalue[k];
+                  }
+               break;
+               }
+           mantissaPoint+=trueBinaryvalue[j];
+           }
+           count1-=1;
+           count1="+"+count1;
+       }
+       else {
+             for(let j=3;j<=max3;j++){
+             let checkOne=trueBinaryvalue[j];
+             count1++;
+                 if(checkOne=="1"){
+                    for(let k=j+1;k<=max3;k++){
+                    mantissaPoint+=trueBinaryvalue[k];
+                    }
+                 break;
+                 }
+              }
+       count1*=-1;
+       }
+   }
+      //**Conversion for positive numbers****
+   else{
+   leadingNonzero;
+        if(firstbitCheck=="1"){
+            for(let j=1;j<=max3;j++){
+            let checkRadix=trueBinaryvalue[j];
+            count1++;
+                if(checkRadix=="."){
+                    for(let k=j+1;k<=max3;k++){
+                    mantissaPoint+=trueBinaryvalue[k];
+                    }
+                break;
+                }
+            mantissaPoint+=trueBinaryvalue[j];
+            }
+        count1-=1;
+        count1="+"+count1;
+            }
+        else {
+              for(let j=2;j<=max3;j++){
+              let checkOne=trueBinaryvalue[j];
+              count1++;
+                  if(checkOne=="1"){
+                      for(let k=j+1;k<=max3;k++){
+                      mantissaPoint+=trueBinaryvalue[k];
+                      }
+                  break;
+                  }
+               }
+        count1*=-1;
+        }
+   }
+   exponentValue=count1;
+   let thesignificant=leadingNonzero+mantissaPoint;
+   if(thesignificant.length>54){
+     thesignificant=thesignificant.slice(0,53);
+   }
+   let trueSignificand=thesignificant+"e"+exponentValue;
+   return trueSignificand;
+ }
+   </script>
+  </body>
+</html>

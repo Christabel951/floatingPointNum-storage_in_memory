@@ -1,0 +1,54 @@
+h2 {
+margin-right: 38px;
+}
+body{
+  text-align: center;
+  background-color: black;
+  display: inline-block;
+font-family: monospace;
+color:white;
+}
+.fieldZ{
+  font-weight: bold;
+}
+.allTitles{
+  font-weight:bolder;
+}
+.step2{
+  font-weight: bold;
+  color: blue;
+}
+#thisexpostore{
+  font-weight: bold;
+}
+#mySigsize{
+  font-weight: bold;
+}
+#flot {
+margin: auto;
+padding-top: 10px;
+padding-bottom: 10px;
+width: 400px;
+background : #D8F1F8;
+border: 1px soild silver;
+}
+#allin1 {list-style-type: none;
+font-size: 14pt;
+
+}
+#batt{
+  border-style: solid;
+    border-width: 5px;
+    margin: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 600px;
+    background : #D8F1F8;
+    border: 1px soild silver;
+}
+#flot {
+font-size:20px;
+
+}
+input:focus, textarea:focus{
+background-color: lightyellow;
